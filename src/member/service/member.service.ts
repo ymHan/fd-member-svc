@@ -3,25 +3,25 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from './jwt.service';
 import { SignUpRequestDto, SignInRequestDto, ValidateRequestDto } from '../member.dto';
-import { Auth } from '../member.entity';
+import { Member } from '../member.entity';
 import { SignInResponse, SignUpResponse, ValidateResponse } from '../member.pb';
 
 @Injectable()
 export class MemberService {
-  @InjectRepository(Auth)
-  private readonly repository: Repository<Auth>;
+  @InjectRepository(Member)
+  private readonly repository: Repository<Member>;
 
   @Inject(JwtService)
   private readonly jwtService: JwtService;
 
   public async signup({ name, email, password, rolesId }: SignUpRequestDto): Promise<SignUpResponse> {
-    let member: Auth = await this.repository.findOne({ where: { email } });
+    let member: Member = await this.repository.findOne({ where: { email } });
 
     if (member) {
       return { status: HttpStatus.CONFLICT, error: ['Email already exists'] };
     }
 
-    member = new Auth();
+    member = new Member();
 
     member.name = name;
     member.email = email;
@@ -34,7 +34,7 @@ export class MemberService {
   }
 
   public async signin({ email, password }: SignInRequestDto): Promise<SignInResponse> {
-    const member: Auth = await this.repository.findOne({ where: { email } });
+    const member: Member = await this.repository.findOne({ where: { email } });
 
     if (!member) {
       return { status: HttpStatus.NOT_FOUND, error: ['Email not found'], token: null };
@@ -56,12 +56,12 @@ export class MemberService {
   }
 
   public async validate({ token }: ValidateRequestDto): Promise<ValidateResponse> {
-    const decoded: Auth = await this.jwtService.verify(token);
+    const decoded: Member = await this.jwtService.verify(token);
 
     if (!decoded) {
       return { status: HttpStatus.FORBIDDEN, error: ['Token is invalid'], userId: null };
     }
-    const member: Auth = await this.jwtService.validateUser(decoded);
+    const member: Member = await this.jwtService.validateUser(decoded);
 
     if (!member) {
       return {
