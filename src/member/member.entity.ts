@@ -2,7 +2,7 @@ import { Exclude } from 'class-transformer';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Auth extends BaseEntity {
+export class Member extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id!: number;
 

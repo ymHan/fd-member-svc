@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { JwtService as Jwt } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Auth } from '../auth.entity';
+import { Member } from '../member.entity';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class JwtService {
-  @InjectRepository(Auth)
-  private readonly repository: Repository<Auth>;
+  @InjectRepository(Member)
+  private readonly repository: Repository<Member>;
 
   private readonly jwt: Jwt;
 
@@ -20,11 +20,11 @@ export class JwtService {
     return this.jwt.decode(token, null);
   }
 
-  public async validateUser(decoded: any): Promise<Auth> {
+  public async validateUser(decoded: any): Promise<Member> {
     return this.repository.findOne(decoded.id);
   }
 
-  public generateToken(auth: Auth): string {
+  public generateToken(auth: Member): string {
     return this.jwt.sign({ id: auth.id, name: auth.name, email: auth.email, rolesId: auth.rolesId });
   }
 

@@ -2,12 +2,12 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from './jwt.service';
-import { SignUpRequestDto, SignInRequestDto, ValidateRequestDto } from '../auth.dto';
-import { Auth } from '../auth.entity';
-import { SignInResponse, SignUpResponse, ValidateResponse } from '../auth.pb';
+import { SignUpRequestDto, SignInRequestDto, ValidateRequestDto } from '../member.dto';
+import { Auth } from '../member.entity';
+import { SignInResponse, SignUpResponse, ValidateResponse } from '../member.pb';
 
 @Injectable()
-export class AuthService {
+export class MemberService {
   @InjectRepository(Auth)
   private readonly repository: Repository<Auth>;
 
@@ -28,26 +28,25 @@ export class AuthService {
     member.password = this.jwtService.encodePassword(password);
     member.rolesId = rolesId;
 
-    console.log(member);
     await this.repository.save(member);
 
     return { status: HttpStatus.CREATED, error: null };
   }
 
   public async signin({ email, password }: SignInRequestDto): Promise<SignInResponse> {
-    const auth: Auth = await this.repository.findOne({ where: { email } });
+    const member: Auth = await this.repository.findOne({ where: { email } });
 
-    if (!auth) {
+    if (!member) {
       return { status: HttpStatus.NOT_FOUND, error: ['Email not found'], token: null };
     }
 
-    const isPasswordValid: boolean = this.jwtService.isPasswordValid(password, auth.password);
+    const isPasswordValid: boolean = this.jwtService.isPasswordValid(password, member.password);
 
     if (!isPasswordValid) {
       return { status: HttpStatus.NOT_FOUND, error: ['Password wrong'], token: null };
     }
 
-    const token: string = this.jwtService.generateToken(auth);
+    const token: string = this.jwtService.generateToken(member);
 
     return {
       token,
@@ -62,9 +61,9 @@ export class AuthService {
     if (!decoded) {
       return { status: HttpStatus.FORBIDDEN, error: ['Token is invalid'], userId: null };
     }
-    const auth: Auth = await this.jwtService.validateUser(decoded);
+    const member: Auth = await this.jwtService.validateUser(decoded);
 
-    if (!auth) {
+    if (!member) {
       return {
         status: HttpStatus.CONFLICT,
         error: ['User not found'],

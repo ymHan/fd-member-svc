@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthController } from './auth.controller';
-import { Auth } from './auth.entity';
-import { AuthService } from './service/auth.service';
+import { MemberController } from './member.controller';
+import { Member } from './member.entity';
+import { MemberService } from './service/member.service';
 import { JwtService } from './service/jwt.service';
 import { JwtStrategy } from './strategy/jwt.strategy';
 
@@ -13,9 +13,9 @@ import { JwtStrategy } from './strategy/jwt.strategy';
       secret: 'dev',
       signOptions: { expiresIn: '365d' },
     }),
-    TypeOrmModule.forFeature([Auth]),
+    TypeOrmModule.forFeature([Member]),
   ],
-  controllers: [AuthController],
-  providers: [AuthService, JwtService, JwtStrategy],
+  controllers: [MemberController],
+  providers: [MemberService, JwtService, JwtStrategy],
 })
-export class AuthModule {}
+export class MemberModule {}

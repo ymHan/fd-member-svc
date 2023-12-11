@@ -3,8 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './auth/filter/http-exception.filter';
-import { protobufPackage } from './auth/auth.pb';
+import { HttpExceptionFilter } from './member/filter/http-exception.filter';
+import { protobufPackage } from './member/auth.pb';
 
 async function bootstrap() {
   const app: INestMicroservice = await NestFactory.createMicroservice(AppModule, {
@@ -12,7 +12,7 @@ async function bootstrap() {
     options: {
       package: protobufPackage,
       url: '0.0.0.0:50051',
-      protoPath: join('node_modules/fd-proto/proto/auth.proto'),
+      protoPath: join('node_modules/fd-proto/proto/member.proto'),
     },
   });
 

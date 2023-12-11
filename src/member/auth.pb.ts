@@ -2,7 +2,7 @@
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
-export const protobufPackage = "auth";
+export const protobufPackage = "member";
 
 export interface SignUpRequest {
   name: string;
@@ -55,7 +55,7 @@ export interface ValidateResponse {
   userId: number;
 }
 
-export const AUTH_PACKAGE_NAME = "auth";
+export const MEMBER_PACKAGE_NAME = "member";
 
 export interface AuthServiceClient {
   signUp(request: SignUpRequest): Observable<SignUpResponse>;
