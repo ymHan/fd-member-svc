@@ -23,4 +23,6 @@ export class MemberController {
   private validate(payload: ValidateRequestDto): Promise<ValidateResponse> {
     return this.service.validate(payload);
   }
+
+
 }

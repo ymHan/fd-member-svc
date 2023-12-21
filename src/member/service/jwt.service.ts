@@ -25,7 +25,7 @@ export class JwtService {
   }
 
   public generateToken(auth: Member): string {
-    return this.jwt.sign({ id: auth.id, name: auth.name, email: auth.email, rolesId: auth.rolesId });
+    return this.jwt.sign({ id: auth.id, name: auth.name, email: auth.email, rolesId: auth.rolesId});
   }
 
   public isPasswordValid(password: string, userPassword: string): boolean {
