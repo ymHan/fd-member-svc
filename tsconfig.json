@@ -16,6 +16,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": ["src/*"],
+      "@entities/*": ["./src/model/entities/*"],
+      "@dto/*": ["./src/model/dtos/*"],
+      "@proto/*": ["./src/proto/*"],
+      "@common/service/*": ["./src/common/service/*"],
+      "@common/strategy/*": ["./src/common/strategy/*"],
+    }
   }
 }

@@ -1,10 +1,9 @@
-import { INestMicroservice, ValidationPipe } from '@nestjs/common';
+import { INestMicroservice } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './member/filter/http-exception.filter';
-import { protobufPackage } from './member/member.pb';
+import { protobufPackage } from '@/proto';
 
 async function bootstrap() {
   const app: INestMicroservice = await NestFactory.createMicroservice(AppModule, {
@@ -15,9 +14,6 @@ async function bootstrap() {
       protoPath: join('node_modules/fd-proto/proto/member.proto'),
     },
   });
-
-  app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen();
 }
