@@ -11,6 +11,8 @@ import { SignUpService } from '@/api/signup/signup.service';
 import { JwtService } from '@/common/service';
 import { JwtStrategy } from '@/common/strategy';
 
+import { EmailService } from '@/utils/email/email.service';
+
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -23,6 +25,6 @@ dotenv.config();
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [SignUpController],
-  providers: [SignUpService, JwtService, JwtStrategy],
+  providers: [SignUpService, JwtService, JwtStrategy, EmailService],
 })
 export class SignUpModule {}

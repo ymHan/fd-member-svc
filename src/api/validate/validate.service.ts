@@ -13,14 +13,14 @@ export class ValidateService {
   private readonly jwtService: JwtService;
 
   public async validate({ token }: ValidateRequestDto): Promise<ValidateResponse> {
-    const decoded: any = await this.jwtService.verify(token);
+    const decoded: User = await this.jwtService.verify(token);
 
     if (!decoded) {
       return {
+        result: 'fail',
         status: HttpStatus.UNAUTHORIZED,
         message: 'Unauthorized',
-        error: [HttpStatus.UNAUTHORIZED.toString()],
-        userId: null,
+        data: [{ error: HttpStatus.UNAUTHORIZED.toString() }],
       };
     }
 
@@ -28,18 +28,27 @@ export class ValidateService {
 
     if (!user) {
       return {
+        result: 'fail',
         status: HttpStatus.CONFLICT,
         message: 'User not found',
-        error: [HttpStatus.CONFLICT.toString()],
-        userId: null,
+        data: [
+          {
+            error: HttpStatus.CONFLICT.toString(),
+          },
+        ],
       };
     }
 
     return {
+      result: 'ok',
       status: HttpStatus.OK,
       message: 'OK',
-      error: null,
-      userId: user.id,
+      data: [
+        {
+          id: user.id,
+          email: user.email,
+        },
+      ],
     };
   }
 }

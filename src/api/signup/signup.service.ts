@@ -2,9 +2,11 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@/common/service';
+import { EmailService } from '@/utils/email/email.service';
 import { User } from '@entities/index';
 import { SignUpRequestDto } from '@dto/index';
 import { SignUpResponse } from '@/proto';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class SignUpService {
@@ -14,15 +16,19 @@ export class SignUpService {
   @Inject(JwtService)
   private readonly jwtService: JwtService;
 
+  @Inject(EmailService)
+  private readonly emailService: EmailService;
+
   public async signup(userData: SignUpRequestDto): Promise<SignUpResponse> {
     const user: User = await this.userRepository.findOne({ where: { email: userData.email } });
 
     // 이미 이메일 주소가 존재한다면...
     if (user) {
       return {
+        result: 'fail',
         status: HttpStatus.CONFLICT,
         message: 'Email already exists',
-        error: [HttpStatus.CONFLICT.toString()],
+        data: [],
       };
     }
 
@@ -32,14 +38,26 @@ export class SignUpService {
     newUser.password = this.jwtService.encodePassword(userData.password);
     newUser.role = userData.role;
 
-    await this.userRepository.save(newUser);
-    const token: string = this.jwtService.generateToken(newUser);
-    console.log(token);
+    const result = await this.userRepository.save(newUser);
+    const token = this.jwtService.generateToken(newUser);
+
+    this.emailService.sendVerificationEmail(result.email, token);
 
     return {
+      result: 'ok',
       status: HttpStatus.CREATED,
-      message: 'OK',
-      error: null,
+      message: 'ok',
+      data: [
+        {
+          id: result.id,
+          name: result.name,
+          email: result.email,
+          role: result.role,
+          state: result.state,
+          isVerifiedEmail: result.isVerifiedEmail,
+          createdAt: dayjs(result.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
+        },
+      ],
     };
   }
 }
