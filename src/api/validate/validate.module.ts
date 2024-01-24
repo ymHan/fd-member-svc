@@ -9,7 +9,7 @@ import { ValidateController } from '@/api/validate/validate.controller';
 import { ValidateService } from '@/api/validate/validate.service';
 
 import { JwtService } from '@/common/service';
-import { JwtStrategy } from '@/common/strategy';
+import { JwtAccessTokenStrategy } from '@/common/strategy';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -23,6 +23,6 @@ dotenv.config();
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [ValidateController],
-  providers: [ValidateService, JwtService, JwtStrategy],
+  providers: [ValidateService, JwtService, JwtAccessTokenStrategy],
 })
 export class ValidateModule {}

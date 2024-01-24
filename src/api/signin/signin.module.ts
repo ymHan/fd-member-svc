@@ -8,7 +8,7 @@ import { SignInController } from '@/api/signin/signin.controller';
 import { SignInService } from '@/api/signin/signin.service';
 
 import { JwtService } from '@/common/service';
-import { JwtStrategy } from '@/common/strategy';
+import { JwtAccessTokenStrategy } from '@/common/strategy';
 
 import * as dotenv from 'dotenv';
 
@@ -23,6 +23,6 @@ dotenv.config();
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [SignInController],
-  providers: [SignInService, JwtService, JwtStrategy],
+  providers: [SignInService, JwtService, JwtAccessTokenStrategy],
 })
 export class SignInModule {}

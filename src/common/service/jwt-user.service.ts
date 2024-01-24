@@ -21,11 +21,11 @@ export class JwtService {
   }
 
   public async validateUser(decoded: any): Promise<User> {
-    return this.repository.findOne(decoded.id);
+    return this.repository.findOne( { where : { id: decoded.id }} );
   }
 
-  public generateToken(auth: User): string {
-    return this.jwt.sign({ id: auth.id, name: auth.name, email: auth.email, role: auth.role });
+  public generateToken(user: User): string {
+    return this.jwt.sign({ id: user.id, name: user.name, email: user.email, role: user.role });
   }
 
   public isPasswordValid(password: string, userPassword: string): boolean {

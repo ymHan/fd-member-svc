@@ -1,1 +1,2 @@
-export * from './jwt.strategy';
+export * from './jwt.AccessTokenStrategy';
+export * from './jwt.RefreshTokenStrategy';

@@ -1,1 +1,1 @@
-//export * from './verity.module';
+export * from './verify.module';

@@ -10,10 +10,10 @@ export class EmailService {
   sendVerificationEmail(email: string, token: string): boolean {
     const emailInfo = {
       to: email,
-      from: process.env.MAIL_ID,
+      from: `"4Dist" <${process.env.MAIL_USER}>`,
       subject: 'Verify your email',
-      text: 'Verify your email',
-      html: `<p>Click <a href="http://localhost:3000/api/v1/validate?token=${token}">here</a> to verify your email.</p>`,
+      text: 'Verify your email text',
+      html: `<p>Click <a href="http://localhost:3000/v1/email?token=${token}">here</a> to verify your email.</p>`,
     };
     console.log(emailInfo);
     this.mailerService

@@ -4,11 +4,11 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { User } from '@entities/index';
 
-import { getUserController } from '@/api/getuser/getuser.controller';
-import { getUserService } from '@/api/getuser/getuser.service';
+import { userController } from '@/api/user/user.controller';
+import { userService } from '@/api/user/user.service';
 
 import { JwtService } from '@/common/service';
-import { JwtStrategy } from '@/common/strategy';
+import { JwtAccessTokenStrategy } from '@/common/strategy';
 
 import * as dotenv from 'dotenv';
 
@@ -22,7 +22,8 @@ dotenv.config();
     }),
     TypeOrmModule.forFeature([User]),
   ],
-  controllers: [getUserController],
-  providers: [getUserService, JwtService, JwtStrategy],
+  controllers: [userController],
+  providers: [userService, JwtService, JwtAccessTokenStrategy],
 })
-export class GetUserModule {}
+export class UserModule {}
+

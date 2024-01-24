@@ -9,18 +9,19 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
   @Inject(JwtService)
   private readonly jwtService: JwtService;
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.JWT_SECRET,
-      ignoreExpiration: true,
+      passReqToCallback: true,
     });
   }
 
-  async validate(payload: User): Promise<User> {
+  async validate(req: Request, payload: User): Promise<User> {
+    //const refreshToken: string = req.get('authorization').split('Bearer ')[1];
     return this.jwtService.validateUser(payload);
   }
 }

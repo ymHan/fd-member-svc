@@ -5,10 +5,10 @@ import { User } from '@entities/index';
 import { ValidateRequestDto } from '@/model/dtos';
 import { JwtService } from '@/common/service';
 import { ValidateResponse } from '@/proto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ValidateService {
-  @InjectRepository(User)
   @Inject(JwtService)
   private readonly jwtService: JwtService;
 
