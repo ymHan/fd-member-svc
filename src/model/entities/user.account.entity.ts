@@ -17,8 +17,14 @@ export class User {
   @Column({ type: 'varchar', nullable: false, length: 255 })
   name!: string;
 
+  @Column({ type: 'varchar', nullable: false, length: 255 })
+  nickname!: string;
+
   @Column({ type: 'enum', enum: AccountRoles })
-  role!: AccountRoles;
+  usertype!: AccountRoles;
+
+  @Column({ type: 'boolean', default: true })
+  pushreceive: boolean;
 
   @Column({ type: 'enum', name: 'state', enum: AccountStates, default: AccountStates.INACTIVE })
   'state': AccountStates;

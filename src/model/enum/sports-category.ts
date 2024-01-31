@@ -1,18 +1,20 @@
-export enum SportsCode {
+export enum SportsCategory {
+  GOLF = 'GLF', // 골프
+  BASEBALL = 'BSB', // 야구
+  BASKETBALL = 'BKB', // 농구
+  TAEKWONDO = 'TKW', // 태권도
+  FOOTBALL = 'FTB', // 축구
+  UFC = 'UFC', // UFC
   AQUATICS = 'AQU', // 수영
   ARCHERY = 'ARC', // 양궁
   ATHLETICS = 'ATH', // 육상
   BADMINTON = 'BDM', // 배드민턴
-  BASEBALL = 'BSB', // 야구
-  BASKETBALL = 'BAS', // 농구
   BOXING = 'BOX', // 복싱
   CANOE = 'CAN', // 카누
   CYCLING = 'CYC', // 사이클
   DANCE = 'DAN', // 댄스
   EQUESTRIAN = 'EQU', // 승마
   FENCING = 'FEN', // 펜싱
-  FOOTBALL = 'FTB', // 축구
-  GOLF = 'GLF', // 골프
   GYMNASTICS = 'GYM', // 체조
   HANDBALL = 'HAN', // 핸드볼
   HOCKEY = 'HOC', // 하키
@@ -26,7 +28,6 @@ export enum SportsCode {
   SPORTCLIMBING = 'SPC', // 스포츠 클라이밍
   SURFING = 'SUR', // 서핑
   TABLETENNIS = 'TAB', // 탁구
-  TAEKWONDO = 'TKD', // 태권도
   TENNIS = 'TEN', // 테니스
   TRIATHLON = 'TRI', // 트라이애슬론
   VOLLEYBALL = 'VOL', // 배구

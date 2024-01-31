@@ -6,6 +6,9 @@ export class SignUpRequestDto implements SignUpRequest {
   @IsString()
   public readonly name: string;
 
+  @IsString()
+  public readonly nickname: string;
+
   @IsEmail()
   public readonly email: string;
 
@@ -15,7 +18,10 @@ export class SignUpRequestDto implements SignUpRequest {
 
   @IsEnum(AccountRoles)
   @IsEmpty()
-  public readonly role: AccountRoles;
+  public readonly usertype: AccountRoles;
+
+  @IsEmpty()
+  public readonly pushreceive: boolean;
 }
 
 export class SignInRequestDto implements SignInRequest {

@@ -15,7 +15,7 @@ export class EmailService {
       text: 'Verify your email text',
       html: `<p>Click <a href="http://localhost:3000/v1/email?token=${token}">here</a> to verify your email.</p>`,
     };
-    console.log(emailInfo);
+
     this.mailerService
       .sendMail(emailInfo)
       .then((result) => {

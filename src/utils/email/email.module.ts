@@ -9,13 +9,17 @@ dotenv.config();
   imports: [
     MailerModule.forRoot({
       transport: {
-        host: `${process.env.MAIL_HOST}`,
+        host: process.env.MAIL_HOST,
         port: parseInt(process.env.MAIL_PORT, 10),
         auth: {
-          user: `${process.env.MAIL_USER}`,
-          pass: `${process.env.MAIL_PASSWORD}`,
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PWD,
         },
         secure: false,
+        requireTLS: true,
+        tls: {
+          ciphers: 'SSLv3',
+        },
       },
     }),
   ],

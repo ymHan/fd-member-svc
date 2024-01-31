@@ -35,7 +35,7 @@ export class userService {
           id: user.id,
           name: user.name,
           email: user.email,
-          role: user.role,
+          usertype: user.usertype,
           isVerifiedEmail: user.isVerifiedEmail,
           createdAt: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss'),
         },
