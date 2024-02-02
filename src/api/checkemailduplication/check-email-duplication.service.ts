@@ -1,7 +1,6 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { JwtService } from '@/common/service';
 import { User } from '@entities/index';
 import { CheckEmailDuplicationRequest, CheckEmailDuplicationResponse } from '@/proto';
 
@@ -10,11 +9,7 @@ export class CheckEmailDuplicationService {
   @InjectRepository(User)
   private readonly userRepository: Repository<User>;
 
-  @Inject(JwtService)
-  private readonly jwtService: JwtService;
-
-  public async checkEmail(data: CheckEmailDuplicationRequest): Promise<CheckEmailDuplicationResponse> {
-    console.log(data.email);
+  public async checkEmailDuplication(data: CheckEmailDuplicationRequest): Promise<CheckEmailDuplicationResponse> {
     const user: User = await this.userRepository.findOne({ where: { email: data.email } });
 
     if (user) {

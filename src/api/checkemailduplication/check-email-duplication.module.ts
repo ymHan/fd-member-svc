@@ -4,8 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { User } from '@entities/index';
 
-import { CheckNicknameDuplicationController } from '@/api/checkemailduplication/check-nickname-duplication.controller';
-import { CheckNicknameDuplicationService } from '@/api/checkemailduplication/check-nickname-duplication.service';
+import { CheckEmailDuplicationController } from '@/api/checkemailduplication/check-email-duplication.controller';
+import { CheckEmailDuplicationService } from '@/api/checkemailduplication/check-email-duplication.service';
+
 
 import { JwtService } from '@/common/service';
 import { JwtAccessTokenStrategy } from '@/common/strategy';
@@ -23,7 +24,7 @@ dotenv.config();
     }),
     TypeOrmModule.forFeature([User]),
   ],
-  controllers: [CheckNicknameDuplicationController],
-  providers: [CheckNicknameDuplicationService, JwtService, JwtAccessTokenStrategy],
+  controllers: [CheckEmailDuplicationController],
+  providers: [CheckEmailDuplicationService, JwtService, JwtAccessTokenStrategy],
 })
 export class CheckEmailDuplicationModule {}

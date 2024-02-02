@@ -7,6 +7,9 @@ import { ValidateModule } from '@/api/validate';
 import { EmailModule } from '@/utils/email/email.module';
 import { UserModule  } from 'src/api/user';
 import { VerifyEmailModule } from '@/api/verification';
+import { CheckEmailDuplicationModule } from '@/api/checkemailduplication';
+import { CheckNicknameDuplicationModule } from '@/api/checknicknameduplication';
+import { PasswordModule } from '@/api/password/password.module';
 
 import ormConfig = require('./config/ormconfig');
 
@@ -19,6 +22,9 @@ import ormConfig = require('./config/ormconfig');
     EmailModule,
     UserModule,
     VerifyEmailModule,
+    CheckEmailDuplicationModule,
+    CheckNicknameDuplicationModule,
+    PasswordModule,
   ],
 })
 export class AppModule {}

@@ -1,6 +1,20 @@
-import { IsEmail, IsString, MinLength, IsEnum, IsEmpty } from 'class-validator';
-import { SignInRequest, SignUpRequest, ValidateRequest } from '../../proto/member.pb';
+import { IsEmail, IsString, MinLength, IsEnum, IsEmpty, IsNumber } from 'class-validator';
+import { SignInRequest, SignUpRequest, ValidateRequest } from '@/proto/';
 import { AccountRoles } from '../enum';
+export class SignInResponseDto {
+  @IsNumber()
+  public readonly id: number;
+
+  @IsEmail()
+  public readonly email: string;
+
+  @IsString()
+  public readonly name: string;
+
+  @IsString()
+  public readonly nickname: string;
+}
+
 
 export class SignUpRequestDto implements SignUpRequest {
   @IsString()

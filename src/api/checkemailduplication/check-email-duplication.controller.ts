@@ -8,8 +8,8 @@ export class CheckEmailDuplicationController {
   @Inject(CheckEmailDuplicationService)
   private readonly service: CheckEmailDuplicationService;
 
-  @GrpcMethod(MEMBER_SERVICE_NAME, 'CheckEmailDuplication')
+  @GrpcMethod(MEMBER_SERVICE_NAME, 'checkEmailDuplication')
   private checkEmailDuplication(email: CheckEmailDuplicationRequest): Promise<CheckEmailDuplicationResponse> {
-    return this.service.checkEmail(email);
+    return this.service.checkEmailDuplication(email);
   }
 }

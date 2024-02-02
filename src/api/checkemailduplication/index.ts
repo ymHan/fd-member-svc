@@ -1,1 +1,1 @@
-export * from './check-nickname-duplication.module';
+export * from './check-email-duplication.module';

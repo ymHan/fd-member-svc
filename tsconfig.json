@@ -20,10 +20,12 @@
     "paths": {
       "@/*": ["src/*"],
       "@entities/*": ["./src/model/entities/*"],
+      "@repository/*": ["./src/model/repository/*"],
       "@dto/*": ["./src/model/dtos/*"],
       "@proto/*": ["./src/proto/*"],
       "@common/service/*": ["./src/common/service/*"],
       "@common/strategy/*": ["./src/common/strategy/*"],
+      "@config/*": ["./src/config/*"],
     }
   }
 }

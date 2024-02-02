@@ -1,11 +1,9 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '@entities/index';
 import { ValidateRequestDto } from '@/model/dtos';
 import { JwtService } from '@/common/service';
 import { ValidateResponse } from '@/proto';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class ValidateService {
@@ -14,7 +12,6 @@ export class ValidateService {
 
   public async validate({ token }: ValidateRequestDto): Promise<ValidateResponse> {
     const decoded: User = await this.jwtService.verify(token);
-
     if (!decoded) {
       return {
         result: 'fail',

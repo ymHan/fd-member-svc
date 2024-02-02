@@ -1,6 +1,6 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions } from 'typeorm';
+import { UserRepository } from '@/repository';
 import { JwtService } from '@/common/service';
 import { EmailService } from '@/utils/email/email.service';
 import { User } from '@entities/index';
@@ -10,8 +10,7 @@ import * as dayjs from 'dayjs';
 
 @Injectable()
 export class SignUpService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>;
+  private userRepository: UserRepository;
 
   @Inject(JwtService)
   private readonly jwtService: JwtService;
@@ -19,6 +18,13 @@ export class SignUpService {
   @Inject(EmailService)
   private readonly emailService: EmailService;
 
+  async findByFields(options: FindOneOptions<SignUpRequestDto>): Promise<SignUpRequestDto | undefined> {
+    return await this.userRepository.findOne(options);
+  }
+
+  async save(signUpRequestDto: SignUpRequestDto): Promise<SignUpResponse | undefined> {
+    return await this.userRepository.save(signUpRequestDto);
+  }
   public async signup(userData: SignUpRequestDto): Promise<SignUpResponse> {
     const user: User = await this.userRepository.findOne({ where: { email: userData.email } });
 

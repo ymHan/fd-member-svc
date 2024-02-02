@@ -4,14 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { User } from '@entities/index';
 
-import { CheckNicknameDuplicationController } from '@/api/checkemailduplication/check-nickname-duplication.controller';
-import { CheckNicknameDuplicationService } from '@/api/checkemailduplication/check-nickname-duplication.service';
+import { CheckNicknameDuplicationController } from '@/api/checknicknameduplication/check-nickname-duplication.controller';
+import { CheckNicknameDuplicationService } from '@/api/checknicknameduplication/check-nickname-duplication.service';
 
 import { JwtService } from '@/common/service';
 import { JwtAccessTokenStrategy } from '@/common/strategy';
 
 import * as dotenv from 'dotenv';
-
 
 dotenv.config();
 
