@@ -1,6 +1,6 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { FindOneOptions } from 'typeorm';
-import { UserRepository } from '../../model/repository/user.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { JwtService } from '@/common/service';
 import { EmailService } from '@/utils/email/email.service';
 import { User } from '@entities/index';
@@ -10,7 +10,8 @@ import * as dayjs from 'dayjs';
 
 @Injectable()
 export class SignUpService {
-  private userRepository: UserRepository;
+  @InjectRepository(User)
+  private readonly userRepository: Repository<User>;
 
   @Inject(JwtService)
   private readonly jwtService: JwtService;
@@ -18,13 +19,8 @@ export class SignUpService {
   @Inject(EmailService)
   private readonly emailService: EmailService;
 
-  async findByFields(options: FindOneOptions<SignUpRequestDto>): Promise<SignUpRequestDto | undefined> {
-    return await this.userRepository.findOne(options);
-  }
-
   public async signup(userData: SignUpRequestDto): Promise<SignUpResponse> {
     const user: User = await this.userRepository.findOne({ where: { email: userData.email } });
-
     // 이미 이메일 주소가 존재한다면...
     if (user) {
       return {

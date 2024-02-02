@@ -30,12 +30,13 @@ export class SignUpRequestDto implements SignUpRequest {
   @MinLength(8)
   public readonly password: string;
 
+  @IsEmpty()
+  public readonly pushreceive: boolean;
+
   @IsEnum(AccountRoles)
   @IsEmpty()
   public readonly usertype: AccountRoles;
 
-  @IsEmpty()
-  public readonly pushreceive: boolean;
 }
 
 export class SignInRequestDto implements SignInRequest {

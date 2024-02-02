@@ -1,23 +1,23 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { UserRepository } from '../../model/repository/user.repository';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { JwtService } from '@/common/service';
 import { User } from '@entities/index';
-import { SignInRequestDto, SignInResponseDto } from '@dto/index';
+import { SignInRequestDto } from '@dto/index';
 import { SignInResponse } from '@/proto';
 
 import { AccountStates } from '@/model/enum';
 
 @Injectable()
 export class SignInService {
-  private readonly userRepository: UserRepository;
+  @InjectRepository(User)
+  private readonly userRepository: Repository<User>;
+
+  @Inject(JwtService)
   private readonly jwtService: JwtService;
 
   public async signin(payload: SignInRequestDto): Promise<SignInResponse> {
-    const user: User = await this.userRepository.findOne({
-      where: {
-        email: payload.email
-      }
-    });
+    const user: User = await this.userRepository.findOne({ where: { email: payload.email } });
 
 
     // 없는 사용자
