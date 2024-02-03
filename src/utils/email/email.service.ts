@@ -13,7 +13,7 @@ export class EmailService {
       from: `"4Dist" <${process.env.MAIL_USER}>`,
       subject: 'Verify your email',
       text: 'Verify your email text',
-      html: `<p>Click <a href="http://localhost:3000/v1/account/email?token=${token}">here</a> to verify your email.</p>`,
+      html: `<p>Click <a href="https://api.4dist.com/v1/account/email?token=${token}">here</a> to verify your email.</p>`,
     };
 
     this.mailerService
