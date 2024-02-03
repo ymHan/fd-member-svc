@@ -67,7 +67,12 @@ export class SignInService {
       result: 'ok',
       status: HttpStatus.OK,
       message: 'OK',
-      data: [{ token }],
+      data: [{
+        email: user.email,
+        name: user.name,
+        nickname: user.nickname,
+        pushreceive: user.pushReceive,
+        token }],
     };
   }
 }

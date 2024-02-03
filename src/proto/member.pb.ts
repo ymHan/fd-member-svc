@@ -237,6 +237,9 @@ export interface SignInRequest {
 }
 
 export interface SignInResult {
+  email?: string | undefined;
+  name?: string | undefined;
+  nickname?: string | undefined;
   token?: string | undefined;
   error?: string | undefined;
 }
