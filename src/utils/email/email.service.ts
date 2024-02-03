@@ -26,4 +26,24 @@ export class EmailService {
       });
     return true;
   }
+
+  sendFindEmail(email: string, authCode: string): boolean {
+    const emailInfo = {
+      to: email,
+      from: `"4Dist" <${process.env.MAIL_USER}>`,
+      subject: 'Please enter the verification code in the 4dist app and re-enter your password.',
+      text: 'Please enter the verification code in the 4dist app and re-enter your password.',
+      html: `<p>Your verification code is <h1>${authCode}</h1>.</p>`,
+    };
+
+    this.mailerService
+      .sendMail(emailInfo)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        throw new ConflictException(error);
+      });
+    return true;
+  }
 }
