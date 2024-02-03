@@ -18,8 +18,7 @@ export class SignInService {
 
   public async signin(payload: SignInRequestDto): Promise<SignInResponse> {
     const user: User = await this.userRepository.findOne({ where: { email: payload.email } });
-
-
+    console.log(user);
     // 없는 사용자
     if (!user) {
       return {
@@ -67,12 +66,15 @@ export class SignInService {
       result: 'ok',
       status: HttpStatus.OK,
       message: 'OK',
-      data: [{
-        email: user.email,
-        name: user.name,
-        nickname: user.nickname,
-        pushreceive: user.pushReceive,
-        token }],
+      data: [
+        {
+          email: user.email,
+          name: user.name,
+          nickname: user.nickname,
+          pushreceive: user.pushreceive,
+          token,
+        },
+      ],
     };
   }
 }
