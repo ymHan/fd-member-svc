@@ -5,7 +5,7 @@ import { SignInModule } from '@/api/signin';
 import { SignUpModule } from '@/api/signup';
 import { ValidateModule } from '@/api/validate';
 import { EmailModule } from '@/utils/email/email.module';
-import { UserModule  } from 'src/api/user';
+import { UserModule } from 'src/api/user';
 import { VerifyEmailModule } from '@/api/verification';
 import { CheckEmailDuplicationModule } from '@/api/checkemailduplication';
 import { CheckNicknameDuplicationModule } from '@/api/checknicknameduplication';
