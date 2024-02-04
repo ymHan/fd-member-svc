@@ -33,6 +33,9 @@ export class SignUpRequestDto implements SignUpRequest {
   @IsEmpty()
   public readonly pushreceive: boolean;
 
+  @IsEmpty()
+  public readonly emailreceive: boolean;
+
   @IsEnum(AccountRoles)
   @IsEmpty()
   public readonly usertype: AccountRoles;

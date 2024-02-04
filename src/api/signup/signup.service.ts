@@ -37,6 +37,7 @@ export class SignUpService {
     newUser.email = userData.email;
     newUser.password = this.jwtService.encodePassword(userData.password);
     newUser.pushreceive = userData.pushreceive;
+    newUser.emailreceive = userData.emailreceive;
     newUser.usertype = userData.usertype;
 
     const result = await this.userRepository.save(newUser);
@@ -56,7 +57,7 @@ export class SignUpService {
           email: result.email,
           usertype: result.usertype,
           state: result.state,
-          isVerifiedEmail: result.isVerifiedEmail,
+          emailreceive: result.emailreceive,
           pushreceive: result.pushreceive,
           createdAt: dayjs(result.createdAt).format('YYYY-MM-DD HH:mm:ss.SSS'),
         },
