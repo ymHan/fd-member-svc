@@ -26,6 +26,9 @@ export class User {
   @Column({ type: 'boolean', default: true })
   pushreceive: boolean;
 
+  @Column({ type: 'boolean', default: true })
+  emailreceive: boolean;
+
   @Column({ type: 'enum', name: 'state', enum: AccountStates, default: AccountStates.INACTIVE })
   'state': AccountStates;
 
