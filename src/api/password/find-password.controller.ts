@@ -8,8 +8,8 @@ export class FindPasswordController {
   @Inject(FindPasswordService)
   private readonly service: FindPasswordService;
 
-  @GrpcMethod(MEMBER_SERVICE_NAME, 'FindEmail')
-  private findEmail(payload: FindPasswordRequest): Promise<FindPasswordResponse> {
+  @GrpcMethod(MEMBER_SERVICE_NAME, 'FindPassword')
+  private findPassword(payload: FindPasswordRequest): Promise<FindPasswordResponse> {
     return this.service.findPassword(payload);
   }
 }
