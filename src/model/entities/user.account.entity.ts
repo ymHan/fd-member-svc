@@ -1,6 +1,7 @@
 import { IsEmail } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { AccountRoles, AccountStates } from '../enum';
+import { Profile } from './user-profile.account.entity';
 
 @Entity()
 export class User {
@@ -43,4 +44,8 @@ export class User {
 
   @Column({ type: 'timestamp with time zone', nullable: true })
   deletedAt: Date;
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
 }
