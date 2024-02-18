@@ -15,7 +15,6 @@ export class SignInResponseDto {
   public readonly nickname: string;
 }
 
-
 export class SignUpRequestDto implements SignUpRequest {
   @IsString()
   public readonly name: string;
@@ -39,17 +38,7 @@ export class SignUpRequestDto implements SignUpRequest {
   @IsEnum(AccountRoles)
   @IsEmpty()
   public readonly usertype: AccountRoles;
-
 }
-
-export class SignInRequestDto implements SignInRequest {
-  @IsEmail()
-  public readonly email: string;
-
-  @IsString()
-  public readonly password: string;
-}
-
 export class ValidateRequestDto implements ValidateRequest {
   @IsString()
   public readonly token: string;

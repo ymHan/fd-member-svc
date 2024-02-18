@@ -1,7 +1,7 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 
 import { User } from '@entities/index';
-import { ValidateRequestDto } from '@/model/dtos';
+import { ValidateRequestDto } from 'src/model/dto';
 import { JwtService } from '@/common/service';
 import { ValidateResponse } from '@/proto';
 

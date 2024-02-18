@@ -1,7 +1,6 @@
 import { Controller, Inject } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { SignInRequestDto } from '@dto/index';
-import { MEMBER_SERVICE_NAME, SignInResponse } from '@/proto';
+import { MEMBER_SERVICE_NAME, SignInResponse, SignInRequest } from '@/proto';
 import { SignInService } from './signin.service';
 import { JwtService } from '@/common/service';
 
@@ -13,7 +12,7 @@ export class SignInController {
   private readonly jwtService: JwtService;
 
   @GrpcMethod(MEMBER_SERVICE_NAME, 'SignIn')
-  private signin(payload: SignInRequestDto): Promise<SignInResponse> {
+  private signin(payload: SignInRequest): Promise<SignInResponse> {
     return this.service.signin(payload);
   }
 }

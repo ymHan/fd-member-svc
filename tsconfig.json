@@ -21,11 +21,12 @@
       "@/*": ["src/*"],
       "@entities/*": ["./src/model/entities/*"],
       "@repository/*": ["./src/model/repository/*"],
-      "@dto/*": ["./src/model/dtos/*"],
+      "@dto/*": ["./src/model/dto/*"],
       "@proto/*": ["./src/proto/*"],
       "@common/service/*": ["./src/common/service/*"],
       "@common/strategy/*": ["./src/common/strategy/*"],
       "@config/*": ["./src/config/*"],
+      "@enum/*": ["./src/model/enum/*"],
     }
   }
 }

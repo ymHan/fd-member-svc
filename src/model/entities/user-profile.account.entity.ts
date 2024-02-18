@@ -11,9 +11,9 @@ export class Profile extends BaseEntity {
   @Column({ type: 'varchar', name: 'photo', nullable: true, length: 255 })
   photo: string;
 
-  @CreateDateColumn({ name: 'create_at', comment: '생성일' })
+  @CreateDateColumn({ name: 'create_at', default: () => 'CURRENT_TIMESTAMP', comment: '생성일' })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'update_at', comment: '수정일' })
+  @UpdateDateColumn({ name: 'update_at', comment: '수정일', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 }

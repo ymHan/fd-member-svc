@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@/common/service';
 import { User } from '@entities/index';
-import { SignInRequestDto } from '@dto/index';
-import { SignInResponse } from '@/proto';
+import { SignInResponse, SignInRequest } from '@/proto';
 
 import { AccountStates } from '@/model/enum';
 
@@ -16,7 +15,7 @@ export class SignInService {
   @Inject(JwtService)
   private readonly jwtService: JwtService;
 
-  public async signin(payload: SignInRequestDto): Promise<SignInResponse> {
+  public async signin(payload: SignInRequest): Promise<SignInResponse> {
     const user: User = await this.userRepository.findOne({ where: { email: payload.email } });
     // 없는 사용자
     if (!user) {
