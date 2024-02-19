@@ -31,8 +31,8 @@ export class EmailService {
     const emailInfo = {
       to: email,
       from: `"4Dist" <${process.env.MAIL_USER}>`,
-      subject: 'Please enter the verification code in the 4dist app and re-enter your password.',
-      text: 'Please enter the verification code in the 4dist app and re-enter your password.',
+      subject: 'Please enter the verification code in the 4dist appversioning and re-enter your password.',
+      text: 'Please enter the verification code in the 4dist appversioning and re-enter your password.',
       html: `<p>Your verification code is <h1>${authCode}</h1>.</p>`,
     };
 
