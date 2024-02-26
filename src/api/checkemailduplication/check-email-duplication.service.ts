@@ -12,14 +12,14 @@ export class CheckEmailDuplicationService {
   public async checkEmailDuplication(data: CheckEmailDuplicationRequest): Promise<CheckEmailDuplicationResponse> {
     const user: User = await this.userRepository.findOne({ where: { email: data.email } });
 
-    if (user) {
+/*    if (user) {
       return {
         result: 'fail',
         status: HttpStatus.CONFLICT,
         message: 'Email already exists',
         data: [],
       };
-    }
+    }*/
 
     return {
       result: 'ok',
