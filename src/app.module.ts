@@ -11,6 +11,7 @@ import { CheckEmailDuplicationModule } from '@/api/checkemailduplication';
 import { CheckNicknameDuplicationModule } from '@/api/checknicknameduplication';
 import { PasswordModule } from '@/api/password/password.module';
 import { LeaveModule } from '@/api/leave';
+import { SocialModule } from '@/api/social';
 
 import ormConfig = require('./config/ormconfig');
 
@@ -27,6 +28,7 @@ import ormConfig = require('./config/ormconfig');
     CheckNicknameDuplicationModule,
     PasswordModule,
     LeaveModule,
+    SocialModule
   ],
 })
 export class AppModule {}
