@@ -1,9 +1,8 @@
-import { IsEmail, IsString, IsEnum } from 'class-validator';
-import { SocialRequest } from '../../proto/member.pb';
+import { IsEmail, IsString, IsEnum, IsEmpty } from 'class-validator';
+import { SocialSignInRequest } from '../../proto/member.pb';
+import { AccountRoles, SocialProvider } from '../enum';
 
-import { SocialProvider } from '../enum';
-
-export class SocialUserDto implements SocialRequest {
+export class SocialUserDto implements SocialSignInRequest {
   @IsEmail()
   public readonly email: string;
 
@@ -15,4 +14,14 @@ export class SocialUserDto implements SocialRequest {
 
   @IsString()
   public readonly providerId: string;
+
+  @IsEmpty()
+  public readonly pushreceive: boolean;
+
+  @IsEmpty()
+  public readonly emailreceive: boolean;
+
+  @IsEnum(AccountRoles)
+  @IsEmpty()
+  public readonly usertype: AccountRoles;
 }
