@@ -5,3 +5,4 @@ export * from './category.entity';
 export * from './sub-category.entity';
 export * from './channel-account.entity';
 export * from './subscription.entity';
+export * from './user.social.entity';
