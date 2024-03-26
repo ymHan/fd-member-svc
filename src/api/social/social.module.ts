@@ -9,6 +9,7 @@ import { SignUpService } from '../signup/signup.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtService } from '@/common/service';
 import { JwtAccessTokenStrategy } from '@/common/strategy';
+import { EmailService } from '@/utils/email/email.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { JwtAccessTokenStrategy } from '@/common/strategy';
     }),
   ],
   controllers: [SocialController],
-  providers: [SocialService, SignUpService, JwtService, JwtAccessTokenStrategy],
+  providers: [SocialService, SignUpService, JwtService, JwtAccessTokenStrategy, EmailService],
 })
 export class SocialModule {}

@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { User } from '@/model/entities';
 import { Social } from '@/model/entities';
 
-import { SignUpService } from '../signup/signup.service';
 import { AccountRoles, AccountStates } from '../../model/enum';
 import { JwtService } from '@/common/service';
 import { SocialUserDto } from '@dto/index';
@@ -20,7 +19,6 @@ export class SocialService {
     private readonly socialRepository: Repository<Social>,
 
     private jwtService: JwtService,
-    private signupService: SignUpService,
   ) {}
 
   async socialSignIn(req: SocialUserDto): Promise<SignInResponse> {
@@ -34,17 +32,14 @@ export class SocialService {
       newUser.email = email;
       newUser.password = '';
       newUser.name = name;
+      newUser.nickname = name;
       // newUser.usertype = AccountRoles.USER;
       newUser.usertype = usertype;
       newUser.state = AccountStates.ACTIVE;
       newUser.isVerifiedEmail = false;
       newUser.pushreceive = pushreceive;
       newUser.emailreceive = emailreceive;
-
-      const signupData = await this.signupService.signup(newUser);
-      if (signupData.status === HttpStatus.OK) {
-        token = this.jwtService.generateToken(newUser);
-      }
+      await this.userRepository.save(newUser);
 
       const newSocial = new Social();
       newSocial.email = email;
@@ -55,6 +50,7 @@ export class SocialService {
       if (!checkExists) {
         await this.socialRepository.save(newSocial);
       }
+      token = this.jwtService.generateToken(newUser);
     } else {
       token = this.jwtService.generateToken(user);
     }
