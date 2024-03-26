@@ -1,5 +1,5 @@
 import { IsEmail, IsString, IsEnum, IsEmpty } from 'class-validator';
-import { SocialSignInRequest } from '../../proto/member.pb';
+import { SocialSignInRequest } from '@/proto';
 import { AccountRoles, SocialProvider } from '../enum';
 
 export class SocialUserDto implements SocialSignInRequest {

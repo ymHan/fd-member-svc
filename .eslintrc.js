@@ -29,4 +29,10 @@ module.exports = {
 			},
 		],
 	},
+	overrides: [
+		{
+			extends: ['plugin:@typescript-eslint/disable-type-checked'],
+			files: ['./**/*.ts']
+		}
+	],
 };
