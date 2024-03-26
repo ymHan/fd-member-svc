@@ -14,7 +14,7 @@ export class Social {
   @Column({ type: 'enum', enum: SocialProvider })
   provider!: SocialProvider;
 
-  @Column({ type: 'varchar', unique: true, nullable: false })
+  @Column({ type: 'varchar', nullable: false })
   providerId!: string;
 
   @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP' })

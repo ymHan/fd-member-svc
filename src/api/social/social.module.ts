@@ -4,12 +4,9 @@ import { SocialService } from './social.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User, Social } from '@/model/entities';
 
-import { SignUpService } from '../signup/signup.service';
-
 import { JwtModule } from '@nestjs/jwt';
 import { JwtService } from '@/common/service';
 import { JwtAccessTokenStrategy } from '@/common/strategy';
-import { EmailService } from '@/utils/email/email.service';
 
 @Module({
   imports: [
@@ -20,6 +17,6 @@ import { EmailService } from '@/utils/email/email.service';
     }),
   ],
   controllers: [SocialController],
-  providers: [SocialService, SignUpService, JwtService, JwtAccessTokenStrategy, EmailService],
+  providers: [SocialService, JwtService, JwtAccessTokenStrategy],
 })
 export class SocialModule {}
