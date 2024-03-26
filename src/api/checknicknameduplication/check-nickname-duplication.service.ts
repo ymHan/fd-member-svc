@@ -1,16 +1,16 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 import { CheckNicknameDuplicationRequest, CheckNicknameDuplicationResponse } from '@/proto';
 
 @Injectable()
 export class CheckNicknameDuplicationService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>;
+  @InjectRepository(UserAccountEntity)
+  private readonly userRepository: Repository<UserAccountEntity>;
 
   public async checkNicknameDuplication(data: CheckNicknameDuplicationRequest): Promise<CheckNicknameDuplicationResponse> {
-    const user: User = await this.userRepository.findOne({ where: { nickname: data.nickname } });
+    const user: UserAccountEntity = await this.userRepository.findOne({ where: { nickname: data.nickname } });
 
     if (user) {
       return {

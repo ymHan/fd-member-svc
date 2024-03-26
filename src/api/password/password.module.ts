@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { User, ResetPasswordEntity } from '@entities/index';
+import { UserAccountEntity, ResetPasswordEntity } from '@entities/index';
 
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -28,7 +28,7 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '365d' },
     }),
-    TypeOrmModule.forFeature([User, ResetPasswordEntity]),
+    TypeOrmModule.forFeature([UserAccountEntity, ResetPasswordEntity]),
   ],
   controllers: [UpdatePasswordController, FindEmailController, FindPasswordController, ResetPasswordController],
   providers: [

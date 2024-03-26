@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/*": ["src/*"],
-      "@entities/*": ["./src/model/entities/*"],
+      "@entities/*": ["src/model/entities/*"],
       "@repository/*": ["./src/model/repository/*"],
       "@dto/*": ["./src/model/dto/*"],
       "@proto/*": ["./src/proto/*"],

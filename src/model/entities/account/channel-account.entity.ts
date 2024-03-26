@@ -1,7 +1,7 @@
 import { Column, PrimaryGeneratedColumn, BaseEntity, Entity } from 'typeorm';
 
-@Entity({ name: 'channel_account' })
-export class ChannelAccount extends BaseEntity {
+@Entity()
+export class ChannelAccountEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number; // 채널 아이디
 

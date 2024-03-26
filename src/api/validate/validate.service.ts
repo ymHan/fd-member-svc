@@ -1,6 +1,6 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 import { ValidateRequestDto } from 'src/model/dto';
 import { JwtService } from '@/common/service';
 import { ValidateResponse } from '@/proto';
@@ -11,7 +11,7 @@ export class ValidateService {
   private readonly jwtService: JwtService;
 
   public async validate({ token }: ValidateRequestDto): Promise<ValidateResponse> {
-    const decoded: User = await this.jwtService.verify(token);
+    const decoded: UserAccountEntity = await this.jwtService.verify(token);
     if (!decoded) {
       return {
         result: 'fail',
@@ -21,7 +21,7 @@ export class ValidateService {
       };
     }
 
-    const user: User = await this.jwtService.validateUser(decoded);
+    const user: UserAccountEntity = await this.jwtService.validateUser(decoded);
 
     if (!user) {
       return {

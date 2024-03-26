@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 import * as dayjs from 'dayjs';
 import {
   GetUserRequest,
@@ -16,11 +16,11 @@ import {
 
 @Injectable()
 export class userService {
-  @InjectRepository(User)
-  private readonly repository: Repository<User>;
+  @InjectRepository(UserAccountEntity)
+  private readonly repository: Repository<UserAccountEntity>;
 
   public async updatePushReceive(payload: UpdatePushReceiveRequest): Promise<UpdatePushReceiveResponse> {
-    const user: User = await this.repository.findOne({ where: { id: payload.id } });
+    const user: UserAccountEntity = await this.repository.findOne({ where: { id: payload.id } });
 
     if (!user) {
       return {
@@ -50,7 +50,7 @@ export class userService {
     };
   }
   public async updateEmailReceive(payload: UpdateEmailReceiveRequest): Promise<UpdateEmailReceiveResponse> {
-    const user: User = await this.repository.findOne({ where: { id: payload.id } });
+    const user: UserAccountEntity = await this.repository.findOne({ where: { id: payload.id } });
 
     if (!user) {
       return {
@@ -81,7 +81,7 @@ export class userService {
   }
 
   public async updateNickname(payload: UpdateNicknameRequest): Promise<UpdateNicknameResponse> {
-    const user: User = await this.repository.findOne({ where: { id: payload.id } });
+    const user: UserAccountEntity = await this.repository.findOne({ where: { id: payload.id } });
 
     if (!user) {
       return {
@@ -112,7 +112,7 @@ export class userService {
   }
 
   public async getUser({ id }: GetUserRequest): Promise<GetUserResponse> {
-    const user: User = await this.repository.findOne({ where: { id } });
+    const user: UserAccountEntity = await this.repository.findOne({ where: { id } });
 
     if (!user) {
       return {

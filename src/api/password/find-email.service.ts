@@ -2,14 +2,14 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EmailService } from '@/utils/email/email.service';
-import { User, ResetPasswordEntity } from '@entities/index';
+import { UserAccountEntity, ResetPasswordEntity } from '@entities/index';
 
 import { FindEmailRequest, FindEmailResponse } from '@/proto';
 
 @Injectable()
 export class FindEmailService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>;
+  @InjectRepository(UserAccountEntity)
+  private readonly userRepository: Repository<UserAccountEntity>;
   @InjectRepository(ResetPasswordEntity)
   private readonly resetPasswordRepository: Repository<ResetPasswordEntity>;
 
@@ -17,7 +17,7 @@ export class FindEmailService {
   private readonly emailService: EmailService;
 
   public async findEmail(userData: FindEmailRequest): Promise<FindEmailResponse> {
-    const user: User = await this.userRepository.findOne({ where: { email: userData.email } });
+    const user: UserAccountEntity = await this.userRepository.findOne({ where: { email: userData.email } });
     if (!user) {
       return {
         result: 'fail',

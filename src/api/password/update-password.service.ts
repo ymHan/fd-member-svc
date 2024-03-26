@@ -1,19 +1,19 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 import { UpdatePasswordRequest, UpdatePasswordResponse } from '@/proto';
 import { JwtService } from '@/common/service';
 
 @Injectable()
 export class UpdatePasswordService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>;
+  @InjectRepository(UserAccountEntity)
+  private readonly userRepository: Repository<UserAccountEntity>;
   @Inject(JwtService)
   private readonly jwtService: JwtService;
 
   public async updatePassword(data: UpdatePasswordRequest): Promise<UpdatePasswordResponse> {
-    const decoded: User = await this.jwtService.verify(data.token);
+    const decoded: UserAccountEntity = await this.jwtService.verify(data.token);
 
     if (!decoded) {
       return {
@@ -23,7 +23,7 @@ export class UpdatePasswordService {
         data: [],
       };
     }
-    const user: User = await this.userRepository.findOne({ where: { email: decoded.email } });
+    const user: UserAccountEntity = await this.userRepository.findOne({ where: { email: decoded.email } });
 
     user.password = this.jwtService.encodePassword(data.password);
 

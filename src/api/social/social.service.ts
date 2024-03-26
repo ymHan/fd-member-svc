@@ -1,10 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '@/model/entities';
+import { UserAccountEntity } from '@/model/entities';
 import { Social } from '@/model/entities';
 
-import { AccountRoles, AccountStates } from '../../model/enum';
+import { AccountStates } from '@/model/enum';
 import { JwtService } from '@/common/service';
 import { SocialUserDto } from '@dto/index';
 import { SignInResponse } from '@/proto';
@@ -12,8 +12,8 @@ import { SignInResponse } from '@/proto';
 @Injectable()
 export class SocialService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(UserAccountEntity)
+    private userRepository: Repository<UserAccountEntity>,
 
     @InjectRepository(Social)
     private readonly socialRepository: Repository<Social>,
@@ -23,12 +23,12 @@ export class SocialService {
 
   async socialSignIn(req: SocialUserDto): Promise<SignInResponse> {
     const { email, name, provider, providerId, pushreceive, emailreceive, usertype } = req;
-    
-    const user: User = await this.userRepository.findOne({ where: { email } });
+
+    const user: UserAccountEntity = await this.userRepository.findOne({ where: { email } });
 
     let token: string;
     if (!user) {
-      const newUser = new User();
+      const newUser = new UserAccountEntity();
       newUser.email = email;
       newUser.password = '';
       newUser.name = name;
@@ -55,7 +55,7 @@ export class SocialService {
       token = this.jwtService.generateToken(user);
     }
 
-    const savedUser: User = await this.userRepository.findOne({ where: { email } });
+    const savedUser: UserAccountEntity = await this.userRepository.findOne({ where: { email } });
 
     return {
       result: 'ok',

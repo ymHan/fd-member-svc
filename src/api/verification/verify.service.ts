@@ -2,14 +2,14 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@/common/service';
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 import { VerifyEmailRequest, VerifyEmailResponse } from '@/proto';
 import { AccountStates } from '@/model/enum';
 
 @Injectable()
 export class EmailVerificationService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>;
+  @InjectRepository(UserAccountEntity)
+  private readonly userRepository: Repository<UserAccountEntity>;
 
   @Inject(JwtService)
   private readonly jwtService: JwtService;

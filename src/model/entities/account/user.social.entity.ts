@@ -1,6 +1,6 @@
 import { IsEmail } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { SocialProvider } from '../enum';
+import { SocialProvider } from '@enum/index';
 
 @Entity()
 export class Social {

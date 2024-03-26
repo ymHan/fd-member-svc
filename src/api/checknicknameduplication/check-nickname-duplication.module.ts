@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 
 import { CheckNicknameDuplicationController } from '@/api/checknicknameduplication/check-nickname-duplication.controller';
 import { CheckNicknameDuplicationService } from '@/api/checknicknameduplication/check-nickname-duplication.service';
@@ -20,7 +20,7 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '365d' },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([UserAccountEntity]),
   ],
   controllers: [CheckNicknameDuplicationController],
   providers: [CheckNicknameDuplicationService, JwtService, JwtAccessTokenStrategy],

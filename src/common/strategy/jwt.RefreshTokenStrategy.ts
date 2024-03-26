@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 import { JwtService } from '@/common/service';
 
 import * as dotenv from 'dotenv';
@@ -20,7 +20,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-ref
     });
   }
 
-  async validate(req: Request, payload: User): Promise<User> {
+  async validate(req: Request, payload: User): Promise<UserAccountEntity> {
     //const refreshToken: string = req.get('authorization').split('Bearer ')[1];
     return this.jwtService.validateUser(payload);
   }

@@ -8,7 +8,6 @@ export class FindEmailController {
   @Inject(FindEmailService)
   private readonly findEmailService: FindEmailService;
 
-
   @GrpcMethod(MEMBER_SERVICE_NAME, 'FindEmail')
   private findEmail(payload: FindEmailRequest): Promise<FindEmailResponse> {
     return this.findEmailService.findEmail(payload);

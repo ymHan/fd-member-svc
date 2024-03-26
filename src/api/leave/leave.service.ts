@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { User } from '@entities/index';
+import { UserAccountEntity } from '@entities/index';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LeaveMemberRequest, LeaveMemberResponse } from '@/proto';
@@ -7,11 +7,11 @@ import { AccountStates } from '@/model/enum';
 
 @Injectable()
 export class LeaveService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>;
+  @InjectRepository(UserAccountEntity)
+  private readonly userRepository: Repository<UserAccountEntity>;
 
   public async leaveMember(payload: LeaveMemberRequest): Promise<LeaveMemberResponse> {
-    const user: User = await this.userRepository.findOne({ where: { id: payload.id } });
+    const user: UserAccountEntity = await this.userRepository.findOne({ where: { id: payload.id } });
     if (!user) {
       return {
         result: 'fail',
