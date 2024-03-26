@@ -20,7 +20,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-ref
     });
   }
 
-  async validate(req: Request, payload: User): Promise<UserAccountEntity> {
+  async validate(req: Request, payload: UserAccountEntity): Promise<UserAccountEntity> {
     //const refreshToken: string = req.get('authorization').split('Bearer ')[1];
     return this.jwtService.validateUser(payload);
   }

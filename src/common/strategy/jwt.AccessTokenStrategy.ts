@@ -20,7 +20,7 @@ export class JwtAccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(payload: User): Promise<User | never> {
+  async validate(payload: UserAccountEntity): Promise<UserAccountEntity | never> {
     return this.jwtService.validateUser(payload);
   }
 }
