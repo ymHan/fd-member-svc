@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '@/model/entities';
 import { Social } from '@/model/entities';
 
-import { AccountRoles, AccountStates } from '../../model/enum';
+import { AccountStates } from '../../model/enum';
 import { JwtService } from '@/common/service';
 import { SocialUserDto } from '@dto/index';
 import { SignInResponse } from '@/proto';
@@ -23,7 +23,7 @@ export class SocialService {
 
   async socialSignIn(req: SocialUserDto): Promise<SignInResponse> {
     const { email, name, provider, providerId, pushreceive, emailreceive, usertype } = req;
-    
+
     const user: User = await this.userRepository.findOne({ where: { email } });
 
     let token: string;
@@ -33,10 +33,9 @@ export class SocialService {
       newUser.password = '';
       newUser.name = name;
       newUser.nickname = name;
-      // newUser.usertype = AccountRoles.USER;
       newUser.usertype = usertype;
       newUser.state = AccountStates.ACTIVE;
-      newUser.isVerifiedEmail = false;
+      newUser.isVerifiedEmail = true;
       newUser.pushreceive = pushreceive;
       newUser.emailreceive = emailreceive;
       await this.userRepository.save(newUser);
@@ -56,6 +55,8 @@ export class SocialService {
     }
 
     const savedUser: User = await this.userRepository.findOne({ where: { email } });
+    savedUser.nickname = `4D${savedUser.id}`;
+    await this.userRepository.save(savedUser);
 
     return {
       result: 'ok',
