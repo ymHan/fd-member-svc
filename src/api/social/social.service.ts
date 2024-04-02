@@ -62,6 +62,7 @@ export class SocialService {
       result: 'ok',
       status: HttpStatus.OK,
       message: 'OK',
+      signType: provider,
       data: [
         {
           id: savedUser.id,
