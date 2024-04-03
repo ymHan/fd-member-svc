@@ -23,6 +23,7 @@ export class SignInService {
         result: 'fail',
         status: HttpStatus.NOT_FOUND,
         message: 'Email not found',
+        signType: null,
         data: [{ error: HttpStatus.NOT_FOUND.toString() }],
       };
     }
@@ -33,6 +34,7 @@ export class SignInService {
         result: 'fail',
         status: HttpStatus.FORBIDDEN,
         message: 'Email not verified',
+        signType: null,
         data: [{ error: HttpStatus.FORBIDDEN.toString() }],
       };
     }
@@ -43,6 +45,7 @@ export class SignInService {
         result: 'fail',
         status: HttpStatus.FORBIDDEN,
         message: 'Account inactive',
+        signType: null,
         data: [{ error: HttpStatus.FORBIDDEN.toString() }],
       };
     }
@@ -54,6 +57,7 @@ export class SignInService {
         result: 'fail',
         status: HttpStatus.UNAUTHORIZED,
         message: 'Password does not match',
+        signType: null,
         data: [{ error: HttpStatus.UNAUTHORIZED.toString() }],
       };
     }
@@ -64,6 +68,7 @@ export class SignInService {
       result: 'ok',
       status: HttpStatus.OK,
       message: 'OK',
+      signType: 'email',
       data: [
         {
           id: user.id,
