@@ -32,7 +32,6 @@ export class SocialService {
           result: 'fail',
           status: HttpStatus.NOT_FOUND,
           message: 'user not found',
-          signType: null,
           data: [{ error: HttpStatus.NOT_FOUND.toString() }],
         };
       } else {
@@ -50,7 +49,6 @@ export class SocialService {
           result: 'fail',
           status: HttpStatus.BAD_REQUEST,
           message: 'email is not provided',
-          signType: null,
           data: [{ error: HttpStatus.BAD_REQUEST.toString() }],
         };
       }
@@ -91,11 +89,11 @@ export class SocialService {
       result: 'ok',
       status: HttpStatus.OK,
       message: 'OK',
-      signType: provider,
       data: [
         {
           ...userData,
           token,
+          signType: provider,
         },
       ],
     };
