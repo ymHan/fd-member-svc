@@ -24,10 +24,37 @@ export class SocialService {
   async socialSignIn(req: SocialUserDto): Promise<SignInResponse> {
     const { email, name, provider, providerId, pushreceive, emailreceive, usertype } = req;
 
-    const user: User = await this.userRepository.findOne({ where: { email } });
+    let userEmail = email;
+    if (provider === 'apple' && !email) {
+      const appleUser = await this.socialRepository.findOne({ where: { provider, providerId } });
+      if (!appleUser) {
+        return {
+          result: 'fail',
+          status: HttpStatus.NOT_FOUND,
+          message: 'user not found',
+          signType: null,
+          data: [{ error: HttpStatus.NOT_FOUND.toString() }],
+        };
+      } else {
+        userEmail = appleUser.email;
+      }
+    }
 
+    const user: User = await this.userRepository.findOne({ where: { email: userEmail } });
     let token: string;
+
+    let userData;
     if (!user) {
+      if (!email) {
+        return {
+          result: 'fail',
+          status: HttpStatus.BAD_REQUEST,
+          message: 'email is not provided',
+          signType: null,
+          data: [{ error: HttpStatus.BAD_REQUEST.toString() }],
+        };
+      }
+
       const newUser = new User();
       newUser.email = email;
       newUser.password = '';
@@ -39,6 +66,11 @@ export class SocialService {
       newUser.pushreceive = pushreceive;
       newUser.emailreceive = emailreceive;
       await this.userRepository.save(newUser);
+
+      const savedUser: User = await this.userRepository.findOne({ where: { email } });
+      savedUser.nickname = `4D${savedUser.id}`;
+      await this.userRepository.save(savedUser);
+      userData = savedUser;
 
       const newSocial = new Social();
       newSocial.email = email;
@@ -52,11 +84,8 @@ export class SocialService {
       token = this.jwtService.generateToken(newUser);
     } else {
       token = this.jwtService.generateToken(user);
+      userData = user;
     }
-
-    const savedUser: User = await this.userRepository.findOne({ where: { email } });
-    savedUser.nickname = `4D${savedUser.id}`;
-    await this.userRepository.save(savedUser);
 
     return {
       result: 'ok',
@@ -65,12 +94,7 @@ export class SocialService {
       signType: provider,
       data: [
         {
-          id: savedUser.id,
-          email: savedUser.email,
-          name: savedUser.name,
-          nickname: savedUser.nickname,
-          pushreceive: savedUser.pushreceive,
-          emailreceive: savedUser.emailreceive,
+          ...userData,
           token,
         },
       ],
