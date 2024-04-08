@@ -73,6 +73,7 @@ export class SignInService {
           pushreceive: user.pushreceive,
           emailreceive: user.emailreceive,
           token,
+          signType: 'email',
         },
       ],
     };
