@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity({ name: 'profile' })
+@Entity()
 export class UserProfileAccountEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;

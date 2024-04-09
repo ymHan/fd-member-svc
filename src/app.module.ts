@@ -28,7 +28,7 @@ import ormConfig = require('./config/ormconfig');
     CheckNicknameDuplicationModule,
     PasswordModule,
     LeaveModule,
-    SocialModule
+    SocialModule,
   ],
 })
 export class AppModule {}

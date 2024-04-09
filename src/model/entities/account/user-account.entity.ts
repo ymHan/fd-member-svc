@@ -1,10 +1,15 @@
 import { IsEmail } from 'class-validator';
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, BeforeInsert } from 'typeorm';
 import { AccountRoles, AccountStates } from '@enum/index';
-import { UserProfileAccountEntity, ChannelAccountEntity, Subscription } from '../index';
-import { ConnectedUserWebsocketEntity } from '@entities/websocket/connected-user.websocket.entity';
-import { JoinedRoomWebsocketEntity } from '@entities/websocket/joined-room.websocket.entity';
-import { MessageWebsocketEntity } from '@entities/websocket/message.websocket.entity';
+import {
+  UserProfileAccountEntity,
+  ChannelAccountEntity,
+  ConnectedUserWebsocketEntity,
+  JoinedRoomWebsocketEntity,
+  MessageWebsocketEntity,
+  VideoEntity,
+  Social,
+} from '@/model/entities';
 
 @Entity()
 export class UserAccountEntity {
@@ -69,4 +74,10 @@ export class UserAccountEntity {
   emailToLowerCate() {
     this.email = this.email.toLowerCase();
   }
+
+  @OneToMany(() => VideoEntity, (video) => video.user)
+  videos: VideoEntity[];
+
+  @OneToMany(() => Social, (social) => social.email)
+  socials: Social[];
 }

@@ -1,6 +1,4 @@
-import { UserAccountEntity } from '@/model/entities';
-import { MessageWebsocketEntity } from './message.websocket.entity';
-import { JoinedRoomWebsocketEntity } from './joined-room.websocket.entity';
+import { UserAccountEntity, MessageWebsocketEntity, JoinedRoomWebsocketEntity } from '@/model/entities';
 import {
   Column,
   Entity,

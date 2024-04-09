@@ -22,4 +22,5 @@ export class ChannelAccountEntity extends BaseEntity {
 
   @Column({ type: 'timestamp without time zone', default: () => 'CURRENT_TIMESTAMP', comment: '생성일' })
   createdAt: Date;
+
 }

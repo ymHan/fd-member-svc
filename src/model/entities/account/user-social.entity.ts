@@ -1,6 +1,7 @@
 import { IsEmail } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { SocialProvider } from '@enum/index';
+import { UserAccountEntity } from '@/model/entities';
 
 @Entity()
 export class Social {
@@ -25,4 +26,8 @@ export class Social {
 
   @Column({ type: 'timestamp with time zone', nullable: true })
   deletedAt: Date;
+
+  @ManyToOne(() => UserAccountEntity, (user) => user.socials)
+  @JoinColumn()
+  user: UserAccountEntity;
 }
