@@ -38,7 +38,7 @@ export class VideoEntity {
   @Column({ default: 'http://', nullable: true })
   url: string; // 비디오 URL
 
-  @Column('text', { array: true })
+  @Column('text', { array: true, nullable: true })
   video_files: string[]; // 비디오 파일
 
   @Column('text', { array: true, nullable: true })
@@ -47,7 +47,7 @@ export class VideoEntity {
   @Column('text', { array: true, nullable: true })
   channelList: string[]; // 비디오 채널 리스트
 
-  @Column('text', { array: true })
+  @Column('text', { array: true, nullable: true })
   thumbnail: string[]; // 비디오 썸네일 파일명, 여러개 추출이 가능하다.
 
   @Column({ nullable: true })
@@ -102,15 +102,16 @@ export class VideoEntity {
   @OneToMany(() => ReportEntity, (report) => report.video)
   reports: ReportEntity[];
 
-  @OneToOne(() => CommonCode)
+  @ManyToOne(() => CommonCode, (commonCode) => commonCode.code)
   @JoinColumn({ name: 'category', referencedColumnName: 'code' })
-  public category: CommonCode;
+  category: CommonCode;
 
-  @OneToOne(() => CommonCode)
+  @ManyToOne(() => CommonCode, (commonCode) => commonCode.code)
   @JoinColumn({ name: 'categorySub', referencedColumnName: 'code' })
-  public categorySub: CommonCode;
+  categorySub: CommonCode;
 
-  @OneToOne(() => CommonCode)
+  @ManyToOne(() => CommonCode, (commonCode) => commonCode.code)
   @JoinColumn({ name: 'categorySubCode', referencedColumnName: 'code' })
-  public categorySubCode: CommonCode;
+  categorySubCode: CommonCode;
+
 }

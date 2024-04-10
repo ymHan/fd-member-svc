@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Unique } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Unique, OneToMany } from 'typeorm';
 
 @Entity()
 @Unique(['code'])
@@ -29,4 +29,7 @@ export class CommonCode {
 
   @Column()
   updated_by_id: number;
+
+  @OneToMany(() => CommonCode, (commonCode) => commonCode.code)
+  commonCodes: CommonCode[];
 }
