@@ -2,21 +2,24 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@/common/service';
-import { UserAccountEntity } from '@entities/index';
+import { User, FirebaseUserToken } from '@entities/index';
 import { SignInResponse, SignInRequest } from '@/proto';
 
 import { AccountStates } from '@/model/enum';
 
 @Injectable()
 export class SignInService {
-  @InjectRepository(UserAccountEntity)
-  private readonly userRepository: Repository<UserAccountEntity>;
+  @InjectRepository(User)
+  private readonly userRepository: Repository<User>;
+
+  @InjectRepository(FirebaseUserToken)
+  private readonly firebaseUserRepository: Repository<FirebaseUserToken>;
 
   @Inject(JwtService)
   private readonly jwtService: JwtService;
 
   public async signin(payload: SignInRequest): Promise<SignInResponse> {
-    const user: UserAccountEntity = await this.userRepository.findOne({ where: { email: payload.email } });
+    const user: User = await this.userRepository.findOne({ where: { email: payload.email } });
     // 없는 사용자
     if (!user) {
       return {
@@ -59,6 +62,20 @@ export class SignInService {
     }
 
     const token: string = this.jwtService.generateToken(user);
+
+    if (payload.devicetoken) {
+      const checkExists = await this.firebaseUserRepository.findOne({ where: { userId: user.id } });
+      if (checkExists && checkExists.deviceToken !== payload.devicetoken) {
+        checkExists.deviceToken = payload.devicetoken;
+        await this.firebaseUserRepository.save(checkExists);
+      }
+      if (!checkExists) {
+        const deviceTokenInfo = new FirebaseUserToken();
+        deviceTokenInfo.userId = user.id;
+        deviceTokenInfo.deviceToken = payload.devicetoken;
+        await this.firebaseUserRepository.save(deviceTokenInfo);
+      }
+    }
 
     return {
       result: 'ok',
