@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '@/model/entities';
+import { User, FirebaseUserToken } from '@/model/entities';
 import { Social } from '@/model/entities';
 
 import { AccountStates } from '../../model/enum';
@@ -17,6 +17,9 @@ export class SocialService {
 
     @InjectRepository(Social)
     private readonly socialRepository: Repository<Social>,
+
+    @InjectRepository(FirebaseUserToken)
+    private readonly firebaseUserRepository: Repository<FirebaseUserToken>,
 
     private jwtService: JwtService,
   ) {}
@@ -83,6 +86,20 @@ export class SocialService {
     } else {
       token = this.jwtService.generateToken(user);
       userData = user;
+    }
+
+    if (req.devicetoken) {
+      const checkExists = await this.firebaseUserRepository.findOne({ where: { userId: userData.id } });
+      if (checkExists && checkExists.deviceToken !== req.devicetoken) {
+        checkExists.deviceToken = req.devicetoken;
+        await this.firebaseUserRepository.save(checkExists);
+      }
+      if (!checkExists) {
+        const deviceTokenInfo = new FirebaseUserToken();
+        deviceTokenInfo.userId = user.id;
+        deviceTokenInfo.deviceToken = req.devicetoken;
+        await this.firebaseUserRepository.save(deviceTokenInfo);
+      }
     }
 
     return {

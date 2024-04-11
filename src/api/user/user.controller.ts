@@ -10,6 +10,8 @@ import {
   UpdatePushReceiveResponse,
   UpdateEmailReceiveResponse,
   UpdateEmailReceiveRequest,
+  UpdateDeviceTokenRequest,
+  UpdateDeviceTokenResponse,
 } from '@/proto';
 import { userService } from './user.service';
 
@@ -36,5 +38,10 @@ export class userController {
   @GrpcMethod(MEMBER_SERVICE_NAME, 'UpdateEmailReceive')
   private updateEmailReceive(payload: UpdateEmailReceiveRequest): Promise<UpdateEmailReceiveResponse> {
     return this.service.updateEmailReceive(payload);
+  }
+
+  @GrpcMethod(MEMBER_SERVICE_NAME, 'UpdateDeviceToken')
+  private updateDeviceToken(payload: UpdateDeviceTokenRequest): Promise<UpdateDeviceTokenResponse> {
+    return this.service.updateDeviceToken(payload);
   }
 }
