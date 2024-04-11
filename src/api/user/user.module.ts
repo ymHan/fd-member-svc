@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 
-import { User } from '@entities/index';
+import { User, FirebaseUserToken } from '@entities/index';
 
 import { userController } from '@/api/user/user.controller';
 import { userService } from '@/api/user/user.service';
@@ -20,10 +20,9 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '365d' },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, FirebaseUserToken]),
   ],
   controllers: [userController],
   providers: [userService, JwtService, JwtAccessTokenStrategy],
 })
 export class UserModule {}
-

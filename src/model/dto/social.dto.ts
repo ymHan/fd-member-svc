@@ -24,4 +24,7 @@ export class SocialUserDto implements SocialSignInRequest {
   @IsEnum(AccountRoles)
   @IsEmpty()
   public readonly usertype: AccountRoles;
+
+  @IsString()
+  public readonly devicetoken?: string | undefined;
 }
