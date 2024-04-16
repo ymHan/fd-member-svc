@@ -1,10 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User, FirebaseUserToken } from '@/model/entities';
+import { UserAccountEntity, FirebaseUserToken } from '@/model/entities';
 import { Social } from '@/model/entities';
 
-import { AccountStates } from '../../model/enum';
+import { AccountStates } from '@/model/enum';
 import { JwtService } from '@/common/service';
 import { SocialUserDto } from '@dto/index';
 import { SignInResponse } from '@/proto';
@@ -12,8 +12,8 @@ import { SignInResponse } from '@/proto';
 @Injectable()
 export class SocialService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(UserAccountEntity)
+    private userRepository: Repository<UserAccountEntity>,
 
     @InjectRepository(Social)
     private readonly socialRepository: Repository<Social>,
@@ -42,7 +42,7 @@ export class SocialService {
       }
     }
 
-    const user: User = await this.userRepository.findOne({ where: { email: userEmail } });
+    const user: UserAccountEntity = await this.userRepository.findOne({ where: { email: userEmail } });
     let token: string;
 
     let userData;
@@ -56,7 +56,7 @@ export class SocialService {
         };
       }
 
-      const newUser = new User();
+      const newUser = new UserAccountEntity();
       newUser.email = email;
       newUser.password = '';
       newUser.name = name;
@@ -68,7 +68,7 @@ export class SocialService {
       newUser.emailreceive = emailreceive;
       await this.userRepository.save(newUser);
 
-      const savedUser: User = await this.userRepository.findOne({ where: { email } });
+      const savedUser: UserAccountEntity = await this.userRepository.findOne({ where: { email } });
       savedUser.nickname = `4D${savedUser.id}`;
       await this.userRepository.save(savedUser);
       userData = savedUser;

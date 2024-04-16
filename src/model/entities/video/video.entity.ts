@@ -8,7 +8,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToOne,
 } from 'typeorm';
 import { UserAccountEntity, LikeEntity, ReportEntity, CommonCode } from '@/model/entities';
 
@@ -35,8 +34,11 @@ export class VideoEntity {
   @Column({ nullable: true })
   recordType: string; // 비디오 녹화 타입
 
-  @Column({ default: 'http://', nullable: true })
+  @Column({ nullable: true })
   url: string; // 비디오 URL
+
+  @Column({ nullable: true })
+  file_path: string; // 비디오 파일 경로
 
   @Column('text', { array: true, nullable: true })
   video_files: string[]; // 비디오 파일
@@ -51,7 +53,7 @@ export class VideoEntity {
   thumbnail: string[]; // 비디오 썸네일 파일명, 여러개 추출이 가능하다.
 
   @Column({ nullable: true })
-  duration: number; // 비디오 길이 3 way인 경우 파일이 3개이지만 길이는 모두 동일하기 때문에 하나만 값을 추출한다.
+  duration: string; // 비디오 길이 3 way인 경우 파일이 3개이지만 길이는 모두 동일하기 때문에 하나만 값을 추출한다.
 
   @Column({ default: 0 })
   view_count: number; // 비디오 조회수
@@ -113,5 +115,4 @@ export class VideoEntity {
   @ManyToOne(() => CommonCode, (commonCode) => commonCode.code)
   @JoinColumn({ name: 'categorySubCode', referencedColumnName: 'code' })
   categorySubCode: CommonCode;
-
 }
