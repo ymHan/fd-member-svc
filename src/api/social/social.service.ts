@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserAccountEntity, FirebaseUserToken } from '@/model/entities';
+import { UserAccountEntity, FirebaseUserToken, ChannelAccountEntity, UserProfileAccountEntity } from '@/model/entities';
 import { Social } from '@/model/entities';
 
 import { AccountStates } from '@/model/enum';
@@ -20,6 +20,12 @@ export class SocialService {
 
     @InjectRepository(FirebaseUserToken)
     private readonly firebaseUserRepository: Repository<FirebaseUserToken>,
+
+    @InjectRepository(ChannelAccountEntity)
+    private readonly channelRepository: Repository<ChannelAccountEntity>,
+
+    @InjectRepository(UserProfileAccountEntity)
+    private readonly profileRepository: Repository<UserProfileAccountEntity>,
 
     private jwtService: JwtService,
   ) {}
@@ -56,6 +62,19 @@ export class SocialService {
         };
       }
 
+      const newChannel = new ChannelAccountEntity();
+      newChannel.channelName = `${name}'s Channel`;
+      newChannel.description = `${name}'님의 채널입니다.`;
+      newChannel.channelUrl = '';
+      newChannel.link = '';
+      newChannel.businessEmail = email;
+      const channelResult = await this.channelRepository.save(newChannel);
+
+      const newProfile = new UserProfileAccountEntity();
+      newProfile.gender = '';
+      newProfile.photo = '';
+      const profileResult = await this.profileRepository.save(newProfile);
+
       const newUser = new UserAccountEntity();
       newUser.email = email;
       newUser.password = '';
@@ -66,9 +85,10 @@ export class SocialService {
       newUser.isVerifiedEmail = true;
       newUser.pushreceive = pushreceive;
       newUser.emailreceive = emailreceive;
-      await this.userRepository.save(newUser);
+      newUser.channel = channelResult;
+      newUser.profile = profileResult;
+      const savedUser = await this.userRepository.save(newUser);
 
-      const savedUser: UserAccountEntity = await this.userRepository.findOne({ where: { email } });
       savedUser.nickname = `4D${savedUser.id}`;
       await this.userRepository.save(savedUser);
       userData = savedUser;
