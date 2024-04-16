@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { UserAccountEntity } from '@entities/index';
+import { UserAccountEntity, ChannelAccountEntity, UserProfileAccountEntity } from '@entities/index';
 
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -22,7 +22,7 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '365d' },
     }),
-    TypeOrmModule.forFeature([UserAccountEntity]),
+    TypeOrmModule.forFeature([UserAccountEntity, ChannelAccountEntity, UserProfileAccountEntity]),
   ],
   controllers: [SignUpController],
   providers: [SignUpService, JwtService, JwtAccessTokenStrategy, EmailService],
