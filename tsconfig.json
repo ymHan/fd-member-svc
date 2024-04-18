@@ -27,6 +27,7 @@
       "@common/strategy/*": ["./src/common/strategy/*"],
       "@config/*": ["./src/config/*"],
       "@enum/*": ["./src/model/enum/*"],
+      "@view/*": ["src/model/view/*"]
     }
   }
 }
