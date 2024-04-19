@@ -34,7 +34,7 @@ import { ViewEntity, ViewColumn } from 'typeorm';
              left join "channel_account_entity" "cae" on "cae"."id" = "uae"."channelId"
     where
         "ve"."isStatus" = true
-  `
+  `,
 })
 export class ViewVideo {
   @ViewColumn()
