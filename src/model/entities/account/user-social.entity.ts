@@ -27,7 +27,7 @@ export class Social {
   @Column({ type: 'timestamp with time zone', nullable: true })
   deletedAt: Date;
 
-  @ManyToOne(() => UserAccountEntity, (user) => user.socials)
-  @JoinColumn()
-  user: UserAccountEntity;
+  // @ManyToOne(() => UserAccountEntity, (user) => user.socials)
+  // @JoinColumn()
+  // user: UserAccountEntity;
 }
