@@ -3,7 +3,7 @@ import { ViewEntity, ViewColumn } from 'typeorm';
 @ViewEntity({
   expression: `
     select
-        "ve"."id" as "videoId",
+        "ve"."id" as "id",
         "ve"."userId",
         "uae"."email",
         "ve"."title",
