@@ -13,7 +13,7 @@ import { ViewEntity, ViewColumn } from 'typeorm';
         "uae"."nickname" as "ownerNickName",
         cae."channelName" as "ownerChannelName",
         concat("ve"."url", "upae"."photo") as "ownerProfileIconUrl",
-        make_urls("ve"."id", 'thumb') as thumbnailUrl,
+        make_urls("ve"."id", 'thumb'::bpchar) as thumbnailUrl,
         "ve"."view_count" as "viewCount",
         "ve"."reportCount",
         "ve"."like_count" as "likesCount",
@@ -22,12 +22,14 @@ import { ViewEntity, ViewColumn } from 'typeorm';
         get_categorysub_name("ve"."categorySub") as "categorySub",
         "ve"."categorySubCode",
         "ve"."recordType",
-        make_urls("ve"."id", 'file') as "contentUrlList",
-        make_urls("ve"."id", 'pose') as "poseIndicatorList",
-        "channelList",
-        "ve"."nodeId",
-        "ve"."createdAt",
-        "ve"."updatedAt"
+        make_urls("ve"."id", 'file'::bpchar) as "contentUrlList",
+        make_urls("ve"."id", 'pose'::bpchar) as "poseIndicatorList",
+        ve."channelList",
+        ve."isPublic",
+        ve."isDeleted",
+        ve."nodeId",
+        ve."createdAt",
+        ve."updatedAt"
     from "video_entity" "ve"
              left join "user_account_entity" "uae" on "ve"."userId" = "uae"."id"
              left join "user_profile_account_entity" "upae" on "uae"."profileId" = "upae"."id"
