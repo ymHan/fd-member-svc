@@ -31,7 +31,8 @@ export class SocialService {
   ) {}
 
   async socialSignIn(req: SocialUserDto): Promise<SignInResponse> {
-    const { email, name, provider, providerId, pushreceive, emailreceive, usertype } = req;
+    const { name, provider, providerId, pushreceive, emailreceive, usertype } = req;
+    const email = req.email.toLowerCase();
 
     let userEmail = email;
     if (provider === 'apple' && !email) {
@@ -68,6 +69,7 @@ export class SocialService {
       newChannel.channelUrl = '';
       newChannel.link = '';
       newChannel.businessEmail = email;
+
       const channelResult = await this.channelRepository.save(newChannel);
 
       const newProfile = new UserProfileAccountEntity();
@@ -87,6 +89,7 @@ export class SocialService {
       newUser.emailreceive = emailreceive;
       newUser.channel = channelResult;
       newUser.profile = profileResult;
+
       const savedUser = await this.userRepository.save(newUser);
 
       savedUser.nickname = `4D${savedUser.id}`;
