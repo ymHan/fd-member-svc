@@ -9,7 +9,7 @@ export class Social {
   id!: number;
 
   @IsEmail()
-  @Column({ type: 'varchar', unique: true, nullable: false })
+  @Column({ type: 'varchar', nullable: false })
   email: string;
 
   @Column({ type: 'enum', enum: SocialProvider })
@@ -27,7 +27,7 @@ export class Social {
   @Column({ type: 'timestamp with time zone', nullable: true })
   deletedAt: Date;
 
-  // @ManyToOne(() => UserAccountEntity, (user) => user.socials)
-  // @JoinColumn()
-  // user: UserAccountEntity;
+  @ManyToOne(() => UserAccountEntity, (user) => user.socials)
+  @JoinColumn()
+  user: UserAccountEntity;
 }
