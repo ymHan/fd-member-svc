@@ -96,19 +96,21 @@ export class SocialService {
       await this.userRepository.save(savedUser);
       userData = savedUser;
 
-      const newSocial = new Social();
-      newSocial.email = email;
-      newSocial.provider = provider;
-      newSocial.providerId = providerId;
-
-      const checkExists = await this.socialRepository.findOne({ where: { email, provider } });
-      if (!checkExists) {
-        await this.socialRepository.save(newSocial);
-      }
       token = this.jwtService.generateToken(newUser);
     } else {
       token = this.jwtService.generateToken(user);
       userData = user;
+    }
+
+    const newSocial = new Social();
+    newSocial.email = email;
+    newSocial.provider = provider;
+    newSocial.providerId = providerId;
+    newSocial.user = userData;
+
+    const checkExists = await this.socialRepository.findOne({ where: { provider, providerId } });
+    if (!checkExists) {
+      await this.socialRepository.save(newSocial);
     }
 
     if (req.devicetoken) {
