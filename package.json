@@ -18,7 +18,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:install": "npm i git+https://github.com/ymHan/fd-proto.git",
     "proto:member": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/fd-proto/proto --ts_proto_out=src/proto/ node_modules/fd-proto/proto/member.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto": "npm run proto:install && npm run proto:member"
+    "proto": "npm run proto:install && npm run proto:member",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --dataSource ./data-source.ts",
+    "migration:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create ./src/database/migrations/Migration",
+    "migration:generate": "npm run typeorm migration:generate ./src/database/migrations/Migration",
+    "migration:run": "npm run typeorm  migration:run",
+    "migration:revert": "npm run typeorm migration:revert"
   },
   "keywords": [],
   "author": "",
