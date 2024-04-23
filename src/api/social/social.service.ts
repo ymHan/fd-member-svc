@@ -121,7 +121,7 @@ export class SocialService {
       }
       if (!checkExists) {
         const deviceTokenInfo = new FirebaseUserToken();
-        deviceTokenInfo.userId = user.id;
+        deviceTokenInfo.userId = userData.id;
         deviceTokenInfo.deviceToken = req.devicetoken;
         await this.firebaseUserRepository.save(deviceTokenInfo);
       }
