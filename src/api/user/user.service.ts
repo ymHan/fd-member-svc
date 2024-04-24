@@ -42,9 +42,7 @@ export class userService {
     }
 
     user.pushreceive = payload.pushreceive;
-    console.log('user.pushreceive', user.pushreceive);
-    const result = await this.repository.save(user);
-    console.log('result', result);
+    await this.repository.save(user);
     return {
       result: 'ok',
       status: HttpStatus.OK,
