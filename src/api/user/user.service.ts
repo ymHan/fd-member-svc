@@ -25,6 +25,7 @@ export class userService {
   private readonly deviceTokenRepository: Repository<FirebaseUserToken>;
 
   public async updatePushReceive(payload: UpdatePushReceiveRequest): Promise<UpdatePushReceiveResponse> {
+    console.log(payload);
     const user: UserAccountEntity = await this.repository.findOne({ where: { id: payload.id } });
 
     if (!user) {
@@ -41,8 +42,9 @@ export class userService {
     }
 
     user.pushreceive = payload.pushreceive;
-    await this.repository.save(user);
-
+    console.log('user.pushreceive', user.pushreceive);
+    const result = await this.repository.save(user);
+    console.log('result', result);
     return {
       result: 'ok',
       status: HttpStatus.OK,
